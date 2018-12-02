@@ -5,6 +5,7 @@
 import numpy as np
 from scipy.constants import hbar, Boltzmann
 
+# What to export?
 __all__ = [
     'bose_einstein_distribution',
     'subsystem_partition_function',

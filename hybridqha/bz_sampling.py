@@ -4,6 +4,9 @@
 
 import numpy as np
 
+# What to export?
+__all__ = ['sample']
+
 
 def sample(q_weights, quantity):
     if not np.all(np.greater_equal(q_weights, 0)):
