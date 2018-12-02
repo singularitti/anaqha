@@ -2,7 +2,7 @@
 
 """
 
-from numba import vectorize, float64, void
+from numba import vectorize, float64
 import numpy as np
 from scipy.constants import hbar, Boltzmann
 
@@ -17,7 +17,6 @@ __all__ = [
 ]
 
 
-@vectorize([void(float64)], nopython=True, target='parallel', cache=True)
 def _validate_frequency(frequency):
     if frequency < 0:
         raise ValueError("Negative frequency is not proper for QHA calculation!")
@@ -38,7 +37,7 @@ def subsystem_partition_function(temperature, frequency):
         is less than or equal to :math:`0`, directly return ``1`` as its subsystem partition function value.
     :return: The subsystem partition function of the harmonic oscillator.
     """
-    _validate_frequency(frequency)
+    # _validate_frequency(frequency)
 
     if frequency == 0:
         return 1
@@ -57,7 +56,7 @@ def subsystem_free_energy(temperature, frequency):
         is less than or equal to :math:`0`, directly return ``0`` as its free energy.
     :return: Helmholtz free energy of the harmonic oscillator, with unit 'joule'.
     """
-    _validate_frequency(frequency)
+    # _validate_frequency(frequency)
 
     if frequency == 0:
         return 0
@@ -69,7 +68,7 @@ def subsystem_free_energy(temperature, frequency):
 
 @vectorize([float64(float64, float64)], nopython=True, target='parallel', cache=True)
 def subsystem_internal_energy(temperature, frequency):
-    _validate_frequency(frequency)
+    # _validate_frequency(frequency)
 
     if frequency == 0:
         return Boltzmann * temperature
@@ -80,7 +79,7 @@ def subsystem_internal_energy(temperature, frequency):
 
 @vectorize([float64(float64, float64)], nopython=True, target='parallel', cache=True)
 def subsystem_entropy(temperature, frequency):
-    _validate_frequency(frequency)
+    # _validate_frequency(frequency)
 
     n = bose_einstein_distribution(temperature, frequency)
     return Boltzmann * ((1 + n) * np.log(1 + n) - n * np.log(n))
@@ -88,7 +87,7 @@ def subsystem_entropy(temperature, frequency):
 
 @vectorize([float64(float64, float64)], nopython=True, target='parallel', cache=True)
 def subsystem_volumetric_specific_heat(temperature, frequency):
-    _validate_frequency(frequency)
+    # _validate_frequency(frequency)
 
     if frequency == 0:
         return Boltzmann
